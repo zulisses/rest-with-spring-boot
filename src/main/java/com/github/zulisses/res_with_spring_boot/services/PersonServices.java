@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.zulisses.res_with_spring_boot.data.dto.v1.PersonDTO;
+import com.github.zulisses.res_with_spring_boot.data.dto.v2.PersonDTOV2;
 import com.github.zulisses.res_with_spring_boot.exception.ResourceNotFoundException;
 import static com.github.zulisses.res_with_spring_boot.mapper.ObjectMapper.parseObject;
 import static com.github.zulisses.res_with_spring_boot.mapper.ObjectMapper.parseListObjects;
 import com.github.zulisses.res_with_spring_boot.model.Person;
 import com.github.zulisses.res_with_spring_boot.repository.PersonRepository;
+import com.github.zulisses.res_with_spring_boot.mapper.custom.PersonMapper;
 
 @Service
 public class PersonServices {
@@ -21,6 +23,9 @@ public class PersonServices {
 
     @Autowired
     private PersonRepository repository;
+
+    @Autowired
+    private PersonMapper mapper;
 
     public PersonDTO findById(Long id) {
         logger.info("Finding one person!");
@@ -38,6 +43,13 @@ public class PersonServices {
 
         Person entity = parseObject(person, Person.class);
         return parseObject(repository.save(entity), PersonDTO.class);
+    }
+
+    public PersonDTOV2 createV2(PersonDTOV2 person) {
+        logger.info("Creating one person with v2!");
+
+        Person entity = parseObject(person, Person.class);
+        return mapper.convertEntityToDTO(repository.save(entity));
     }
 
     public PersonDTO update(PersonDTO person) {
