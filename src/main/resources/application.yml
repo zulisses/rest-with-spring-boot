@@ -3,12 +3,12 @@ spring:
     name: res-with-spring-boot
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/rest_with_spring_boot?useTimezone=true&serverTimezone=UTC
+    url: jdbc:postgresql://localhost:5432/rest_with_spring_boot
     username: postgres
     password: tapetE24%
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: false
     open-in-view: false
 logging:

@@ -1,6 +1,7 @@
 package com.github.zulisses.res_with_spring_boot.services;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +25,8 @@ public class PersonServices {
 
     public PersonDTO findById(Long id) {
         logger.info("Finding one person!");
-        Person entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Person not found"));
+        Person entity = repository.findById(Objects.requireNonNull(id))
+                .orElseThrow(() -> new ResourceNotFoundException("Person not found"));
         return parseObject(entity, PersonDTO.class);
     }
 
@@ -36,13 +38,14 @@ public class PersonServices {
     public PersonDTO create(PersonDTO person) {
         logger.info("Creating one person!");
 
-        Person entity = parseObject(person, Person.class);
+        Person entity = Objects.requireNonNull(parseObject(person, Person.class));
         return parseObject(repository.save(entity), PersonDTO.class);
     }
 
     public PersonDTO update(PersonDTO person) {
         logger.info("Updating one person!");
-        Person entity = repository.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException("Person not found"));
+        Person entity = repository.findById(Objects.requireNonNull(person.getId()))
+                .orElseThrow(() -> new ResourceNotFoundException("Person not found"));
         entity.setFirstName(person.getFirstName());
         entity.setLastName(person.getLastName());
         entity.setAddress(person.getAddress());
@@ -53,7 +56,8 @@ public class PersonServices {
 
     public void delete(Long id) {
         logger.info("Deleting one person!");
-        Person person = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Person not found"));
-        repository.delete(person);
+        Person person = repository.findById(Objects.requireNonNull(id))
+                .orElseThrow(() -> new ResourceNotFoundException("Person not found"));
+        repository.delete(Objects.requireNonNull(person));
     }
 }

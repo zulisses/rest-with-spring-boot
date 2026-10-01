@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/api/person/v1")
 public class PersonController {
 
     @Autowired
