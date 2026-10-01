@@ -29,32 +29,32 @@ public class PersonController implements PersonControllerDocs {
     @Autowired
     private PersonServices service;
 
-    @Override
     @GetMapping(path = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
+    @Override
     public PersonDTO findById(@PathVariable("id") Long id) {
         return service.findById(id);
     }
 
-    @Override
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
+    @Override
     public List<PersonDTO> findAll() {
         return service.findAll();
     }
 
-    @Override
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
+    @Override
     public PersonDTO create(@RequestBody PersonDTO person) {
         return service.create(person);
     }
 
-    @Override
     @PutMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
+    @Override
     public PersonDTO update(@RequestBody PersonDTO person) {
         return service.update(person);
     }
 
-    @Override
     @DeleteMapping("/{id}")
+    @Override
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
