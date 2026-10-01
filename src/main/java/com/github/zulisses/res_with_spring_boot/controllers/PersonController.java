@@ -1,7 +1,10 @@
 package com.github.zulisses.res_with_spring_boot.controllers;
 
+import com.github.zulisses.res_with_spring_boot.controllers.docs.PersonControllerDocs;
 import com.github.zulisses.res_with_spring_boot.data.dto.v1.PersonDTO;
 import com.github.zulisses.res_with_spring_boot.services.PersonServices;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 
@@ -20,31 +23,37 @@ import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/api/person/v1")
-public class PersonController {
+@Tag(name = "People", description = "Endpoints for Managing People")
+public class PersonController implements PersonControllerDocs {
 
     @Autowired
     private PersonServices service;
 
+    @Override
     @GetMapping(path = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
     public PersonDTO findById(@PathVariable("id") Long id) {
         return service.findById(id);
     }
 
+    @Override
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
     public List<PersonDTO> findAll() {
         return service.findAll();
     }
 
+    @Override
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
     public PersonDTO create(@RequestBody PersonDTO person) {
         return service.create(person);
     }
 
+    @Override
     @PutMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
     public PersonDTO update(@RequestBody PersonDTO person) {
         return service.update(person);
     }
 
+    @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         service.delete(id);
