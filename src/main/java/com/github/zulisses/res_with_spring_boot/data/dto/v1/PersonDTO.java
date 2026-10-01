@@ -3,7 +3,11 @@ package com.github.zulisses.res_with_spring_boot.data.dto.v1;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class PersonDTO implements Serializable {
+import org.springframework.hateoas.RepresentationModel;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
+
+public class PersonDTO extends RepresentationModel<PersonDTO> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -56,13 +60,13 @@ public class PersonDTO implements Serializable {
     }
 
     @Override
-    public String toString() {
+    public @NonNull String toString() {
         return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address
                 + ", gender=" + gender + "]";
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(@Nullable Object obj) {
         if (this == obj) return true;
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;

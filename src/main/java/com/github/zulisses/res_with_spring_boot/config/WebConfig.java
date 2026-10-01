@@ -1,7 +1,10 @@
 package com.github.zulisses.res_with_spring_boot.config;
 
+import java.util.Objects;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -9,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer{
 
 	@Override 
-    public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+    public void configureContentNegotiation(@NonNull ContentNegotiationConfigurer configurer) {
 
         // via QUERY PARAMETER http://localhost:8080/api/person/v1?mediaType=xml
         // configurer.favorParameter(true)
@@ -25,8 +28,8 @@ public class WebConfig implements WebMvcConfigurer{
         .ignoreAcceptHeader(false)
         .useRegisteredExtensionsOnly(false)
         .defaultContentType(MediaType.APPLICATION_JSON)
-        .mediaType("json", MediaType.APPLICATION_JSON)
-        .mediaType("xml", MediaType.APPLICATION_XML)
+        .mediaType("json", Objects.requireNonNull(MediaType.APPLICATION_JSON))
+        .mediaType("xml", Objects.requireNonNull(MediaType.APPLICATION_XML))
         .mediaType("yaml", MediaType.parseMediaType("application/yaml"));
     }
 }
