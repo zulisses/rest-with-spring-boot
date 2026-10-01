@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.github.zulisses.res_with_spring_boot.controllers.PersonController;
 import com.github.zulisses.res_with_spring_boot.data.dto.v1.PersonDTO;
+import com.github.zulisses.res_with_spring_boot.exception.RequiredObjectIsNullException;
 import com.github.zulisses.res_with_spring_boot.exception.ResourceNotFoundException;
 import static com.github.zulisses.res_with_spring_boot.mapper.ObjectMapper.parseObject;
 import static com.github.zulisses.res_with_spring_boot.mapper.ObjectMapper.parseListObjects;
@@ -43,6 +44,9 @@ public class PersonServices {
     }
 
     public PersonDTO create(PersonDTO person) {
+        if(person == null) {
+            throw new RequiredObjectIsNullException();
+        }
         logger.info("Creating one person!");
 
         Person entity = Objects.requireNonNull(parseObject(person, Person.class));
@@ -52,6 +56,9 @@ public class PersonServices {
     }
 
     public PersonDTO update(PersonDTO person) {
+        if(person == null) {
+            throw new RequiredObjectIsNullException();
+        }
         logger.info("Updating one person!");
         Person entity = repository.findById(Objects.requireNonNull(person.getId()))
                 .orElseThrow(() -> new ResourceNotFoundException("Person not found"));

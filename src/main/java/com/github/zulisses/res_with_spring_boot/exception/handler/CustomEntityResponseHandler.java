@@ -11,6 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.github.zulisses.res_with_spring_boot.exception.ExceptionResponse;
+import com.github.zulisses.res_with_spring_boot.exception.RequiredObjectIsNullException;
 import com.github.zulisses.res_with_spring_boot.exception.ResourceNotFoundException;
 
 
@@ -28,5 +29,11 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
     public final ResponseEntity<ExceptionResponse> handleResourceNotFoundException(Exception ex, WebRequest request) {
         ExceptionResponse response = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(RequiredObjectIsNullException.class)
+    public final ResponseEntity<ExceptionResponse> handleRequiredObjectIsNullException(Exception ex, WebRequest request) {
+        ExceptionResponse response = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }
