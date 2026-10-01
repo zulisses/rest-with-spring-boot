@@ -3,6 +3,7 @@ package com.github.zulisses.res_with_spring_boot.controllers;
 import com.github.zulisses.res_with_spring_boot.data.dto.v1.PersonDTO;
 import com.github.zulisses.res_with_spring_boot.services.PersonServices;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,13 @@ public class PersonController {
 
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public PersonDTO findById(@PathVariable("id") Long id) {
-        return service.findById(id);
+        var personDTO = service.findById(id);
+        personDTO.setBirthDate(new Date());
+        // personDTO.setPhoneNumber("+55 (11) 99999-9999");
+        personDTO.setPhoneNumber("");
+        personDTO.setLastName(null); 
+        personDTO.setSensitiveData("This is a sensitive data");
+        return personDTO;
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

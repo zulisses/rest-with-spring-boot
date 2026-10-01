@@ -1,16 +1,44 @@
 package com.github.zulisses.res_with_spring_boot.data.dto.v1;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.github.zulisses.res_with_spring_boot.services.GenderSerializer;
+
+// import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+// import com.fasterxml.jackson.annotation.JsonIgnore;
+// import com.fasterxml.jackson.annotation.JsonProperty;
+
+// @JsonPropertyOrder({ "id", "first_name", "last_name", "address", "gender" })
+@JsonFilter("PersonFilter")
 public class PersonDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+
+    // @JsonProperty("first_name")
     private String firstName;
+    
+    // @JsonProperty("last_name")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String lastName;
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private String phoneNumber;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private Date birthDate;
     private String address;
+
+    // @JsonIgnore
+    @JsonSerialize(using = GenderSerializer.class)
     private String gender;
+    private String sensitiveData;
 
     public PersonDTO() {
     }
@@ -55,10 +83,34 @@ public class PersonDTO implements Serializable {
         this.gender = gender;
     }
 
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getSensitiveData() {
+        return sensitiveData;
+    }
+
+    public void setSensitiveData(String sensitiveData) {
+        this.sensitiveData = sensitiveData;
+    }
+
     @Override
     public String toString() {
         return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address
-                + ", gender=" + gender + "]";
+                + ", gender=" + gender + ", birthDate=" + birthDate + ", phoneNumber=" + phoneNumber + ", sensitiveData=" + sensitiveData + "]";
     }
 
     @Override
@@ -67,11 +119,11 @@ public class PersonDTO implements Serializable {
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;
         PersonDTO other = (PersonDTO) obj;
-        return Objects.equals(id, other.id) && Objects.equals(firstName, other.firstName) && Objects.equals(lastName, other.lastName) && Objects.equals(address, other.address) && Objects.equals(gender, other.gender);
+        return Objects.equals(id, other.id) && Objects.equals(firstName, other.firstName) && Objects.equals(lastName, other.lastName) && Objects.equals(address, other.address) && Objects.equals(gender, other.gender) && Objects.equals(birthDate, other.birthDate) && Objects.equals(phoneNumber, other.phoneNumber) && Objects.equals(sensitiveData, other.sensitiveData);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, address, gender);
+        return Objects.hash(id, firstName, lastName, address, gender, birthDate, phoneNumber, sensitiveData);
     }
 }
