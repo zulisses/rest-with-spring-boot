@@ -1,5 +1,5 @@
 cors: 
-  originPatterns: http://localhost:8080,http://localhost:3000,http://www.erudio.com.br
+  originPatterns: http://localhost:8080,http://localhost:3000,https://www.erudio.com.br
 spring:
   application:
     name: res-with-spring-boot
