@@ -1,10 +1,11 @@
-package com.github.zulisses.res_with_spring_boot.services;
+package com.github.zulisses.res_with_spring_boot.unittests.services;
 
 import com.github.zulisses.res_with_spring_boot.data.dto.v1.BookDTO;
 import com.github.zulisses.res_with_spring_boot.exception.RequiredObjectIsNullException;
 import com.github.zulisses.res_with_spring_boot.model.Book;
 import com.github.zulisses.res_with_spring_boot.repository.BookRepository;
-import com.github.zulisses.res_with_spring_boot.unitetests.mapper.mocks.MockBook;
+import com.github.zulisses.res_with_spring_boot.services.BookServices;
+import com.github.zulisses.res_with_spring_boot.unittests.mapper.mocks.MockBook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

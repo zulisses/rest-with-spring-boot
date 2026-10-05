@@ -1,4 +1,4 @@
-package com.github.zulisses.res_with_spring_boot.unitetests.mapper;
+package com.github.zulisses.res_with_spring_boot.unittests.mapper;
 import static com.github.zulisses.res_with_spring_boot.mapper.ObjectMapper.parseListObjects;
 import static com.github.zulisses.res_with_spring_boot.mapper.ObjectMapper.parseObject;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import com.github.zulisses.res_with_spring_boot.data.dto.v1.PersonDTO;
 import com.github.zulisses.res_with_spring_boot.model.Person;
-import com.github.zulisses.res_with_spring_boot.unitetests.mapper.mocks.MockPerson;
+import com.github.zulisses.res_with_spring_boot.unittests.mapper.mocks.MockPerson;
 
 public class ObjectMapperTests {
     MockPerson inputObject;

@@ -1,4 +1,4 @@
-package com.github.zulisses.res_with_spring_boot.unitetests.mapper.mocks;
+package com.github.zulisses.res_with_spring_boot.unittests.mapper.mocks;
 
 import java.util.ArrayList;
 import java.util.Date;

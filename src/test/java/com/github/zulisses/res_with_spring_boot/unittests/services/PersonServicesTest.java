@@ -1,4 +1,4 @@
-package com.github.zulisses.res_with_spring_boot.services;
+package com.github.zulisses.res_with_spring_boot.unittests.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -26,7 +26,8 @@ import com.github.zulisses.res_with_spring_boot.data.dto.v1.PersonDTO;
 import com.github.zulisses.res_with_spring_boot.exception.RequiredObjectIsNullException;
 import com.github.zulisses.res_with_spring_boot.model.Person;
 import com.github.zulisses.res_with_spring_boot.repository.PersonRepository;
-import com.github.zulisses.res_with_spring_boot.unitetests.mapper.mocks.MockPerson;
+import com.github.zulisses.res_with_spring_boot.services.PersonServices;
+import com.github.zulisses.res_with_spring_boot.unittests.mapper.mocks.MockPerson;
 
 @ExtendWith(MockitoExtension.class)
 @SuppressWarnings("null")
