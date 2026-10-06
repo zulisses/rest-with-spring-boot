@@ -26,6 +26,8 @@ public class Person implements Serializable {
     private String address;
     @Column(nullable = false, length = 6)
     private String gender;
+    @Column(nullable = false)
+    private boolean enabled;
 
     public Person() {
     }
@@ -70,10 +72,18 @@ public class Person implements Serializable {
         this.gender = gender;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public String toString() {
         return "Person [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address
-                + ", gender=" + gender + "]";
+                + ", gender=" + gender + ", enabled=" + enabled + "]";
     }
 
     @Override

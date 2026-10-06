@@ -19,6 +19,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import com.github.zulisses.res_with_spring_boot.model.Person;
 import com.github.zulisses.res_with_spring_boot.repository.PersonRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class PersonServices {
 
@@ -79,11 +81,28 @@ public class PersonServices {
         repository.delete(Objects.requireNonNull(person));
     }
 
+    @Transactional
+    public PersonDTO disablePerson(Long id) {
+        logger.info("Disabling one person!");
+        
+        repository.findById(Objects.requireNonNull(id))
+                .orElseThrow(() -> new ResourceNotFoundException("Person not found"));
+
+        repository.disablePerson(Objects.requireNonNull(id));
+
+        var entity = repository.findById(Objects.requireNonNull(id)).get();
+        var dto = parseObject(entity, PersonDTO.class);
+        addHateoasLinks(dto);
+
+        return dto;
+    }
+
     private void addHateoasLinks(PersonDTO dto) {
         dto.add(linkTo(Objects.requireNonNull(methodOn(PersonController.class).findById(dto.getId()))).withSelfRel().withType("GET"));
         dto.add(linkTo(Objects.requireNonNull(methodOn(PersonController.class).findAll())).withRel("findAll").withType("GET"));
         dto.add(linkTo(Objects.requireNonNull(methodOn(PersonController.class).create(dto))).withRel("create").withType("POST"));
         dto.add(linkTo(Objects.requireNonNull(methodOn(PersonController.class).update(dto))).withRel("update").withType("PUT"));
+        dto.add(linkTo(Objects.requireNonNull(methodOn(PersonController.class).disablePerson(dto.getId()))).withRel("disable").withType("PATCH"));
         dto.add(linkTo(Objects.requireNonNull(methodOn(PersonController.class).delete(dto.getId()))).withRel("delete").withType("DELETE"));
     }
 }
