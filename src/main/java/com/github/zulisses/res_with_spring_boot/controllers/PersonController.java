@@ -6,10 +6,7 @@ import com.github.zulisses.res_with_spring_boot.services.PersonServices;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -54,6 +51,19 @@ public class PersonController implements PersonControllerDocs {
         var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "firstName"));
         return ResponseEntity.ok(service.findAll(pageable));
+    }
+
+    @GetMapping(path = "/findPeopleByFirstName/{firstName}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
+    @Override
+    public ResponseEntity<PagedModel<EntityModel<PersonDTO>>> findPeopleByFirstName(
+        @PathVariable(value = "firstName") String firstName,
+        @RequestParam(value = "page", defaultValue = "0") int page,
+        @RequestParam(value = "size", defaultValue = "12") int size,
+        @RequestParam(value = "direction", defaultValue = "asc") String direction
+    ) {
+        var sortDirection = "desc".equalsIgnoreCase(direction) ? Direction.DESC : Direction.ASC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, "firstName"));
+        return ResponseEntity.ok(service.findPeopleByFirstName(firstName, pageable));
     }
 
     // @CrossOrigin(origins = {"http://localhost:8080", "http://www.erudio.com.br"})

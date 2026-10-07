@@ -19,8 +19,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.zulisses.res_with_spring_boot.config.TestConfigs;
-import com.github.zulisses.res_with_spring_boot.data.dto.v1.PersonDTO;
 import com.github.zulisses.res_with_spring_boot.integrationtests.testcontainers.AbstractIntegrationTest;
+import com.github.zulisses.res_with_spring_boot.integrationtests.dto.PersonDTO;
+import com.github.zulisses.res_with_spring_boot.integrationtests.dto.wrappers.WrapperPersonDTO;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -176,6 +177,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest{
         
         var content = given(specification)
         .accept(MediaType.APPLICATION_JSON_VALUE)
+        .queryParam("page", 3, "size", 12, "direction", "asc")
         .when()
         .get()
         .then()
@@ -183,13 +185,15 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest{
         .extract()
         .body().asString();
 
-        List<PersonDTO> people = objectMapper.readValue(content, new TypeReference<List<PersonDTO>>() {});
+        WrapperPersonDTO wrapper = objectMapper.readValue(content, WrapperPersonDTO.class);
+
+        List<PersonDTO> people = wrapper.getEmbedded().getPeople();
         
         assertNotNull(people);
         assertTrue(people.size() > 0);
-        assertEquals("Ulisses", people.get(0).getFirstName());
-        assertEquals("Carvalho", people.get(0).getLastName());
-        assertEquals("Belo Horizonte - Brasil", people.get(0).getAddress());
+        assertEquals("Alvie", people.get(0).getFirstName());
+        assertEquals("Masham", people.get(0).getLastName());
+        assertEquals("Apt 1227", people.get(0).getAddress());
         assertEquals("Male", people.get(0).getGender());
         assertEquals(true, people.get(0).isEnabled());
     }

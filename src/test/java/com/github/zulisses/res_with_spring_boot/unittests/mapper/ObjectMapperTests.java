@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.github.zulisses.res_with_spring_boot.data.dto.v1.PersonDTO;
+import com.github.zulisses.res_with_spring_boot.integrationtests.dto.PersonDTO;
 import com.github.zulisses.res_with_spring_boot.model.Person;
 import com.github.zulisses.res_with_spring_boot.unittests.mapper.mocks.MockPerson;
 

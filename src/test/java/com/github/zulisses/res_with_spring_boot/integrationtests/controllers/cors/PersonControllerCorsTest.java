@@ -16,7 +16,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.zulisses.res_with_spring_boot.config.TestConfigs;
-import com.github.zulisses.res_with_spring_boot.data.dto.v1.PersonDTO;
+import com.github.zulisses.res_with_spring_boot.integrationtests.dto.PersonDTO;
 import com.github.zulisses.res_with_spring_boot.integrationtests.testcontainers.AbstractIntegrationTest;
 
 import io.restassured.builder.RequestSpecBuilder;
