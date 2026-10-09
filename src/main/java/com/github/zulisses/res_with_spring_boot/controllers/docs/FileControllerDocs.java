@@ -1,9 +1,11 @@
 package com.github.zulisses.res_with_spring_boot.controllers.docs;
 
-import com.github.zulisses.res_with_spring_boot.data.UploadFileResponseDTO;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.github.zulisses.res_with_spring_boot.data.dto.v1.UploadFileResponseDTO;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;

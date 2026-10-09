@@ -31,8 +31,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import jakarta.servlet.http.HttpServletRequest;
 
 import com.github.zulisses.res_with_spring_boot.controllers.docs.FileControllerDocs;
+import com.github.zulisses.res_with_spring_boot.data.dto.v1.UploadFileResponseDTO;
 import com.github.zulisses.res_with_spring_boot.config.FileStorageConfig;
-import com.github.zulisses.res_with_spring_boot.data.UploadFileResponseDTO;
 import com.github.zulisses.res_with_spring_boot.services.FileStorageService;
 
 @RestController

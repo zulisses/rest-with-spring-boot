@@ -95,13 +95,15 @@ public class PersonServices {
         try(InputStream inputStream = file.getInputStream()) {
             String filename = Optional.ofNullable(file.getOriginalFilename())
                 .orElseThrow(() -> new BadRequestException("File name cannot be null!"));
+            logger.info("Filename: {}", filename);
             FileImporter importer = this.importer.getImporter(filename);
-
+            logger.info("Importer: {}", importer);
             List<Person> entities = importer.importFile(inputStream).stream()
                 .map(dto -> repository.save(parseObject(dto, Person.class)))
                 .toList();
-            
+            logger.info("Entities: {}", entities);
             return entities.stream().map(person -> {
+                logger.info("Person: {}", person);
                 PersonDTO dto = parseObject(person, PersonDTO.class);
                 addHateoasLinks(dto);
                 return dto;
@@ -175,6 +177,8 @@ public class PersonServices {
                 methodOn(PersonController.class).findPeopleByFirstName(dto.getFirstName(), 0, 12, "asc")))
                 .withRel("findPeopleByFirstName").withType("GET"));
         dto.add(linkTo(Objects.requireNonNull(methodOn(PersonController.class).create(dto))).withRel("create")
+                .withType("POST"));
+        dto.add(linkTo(Objects.requireNonNull(methodOn(PersonController.class))).slash("massCreation").withRel("massCreation")
                 .withType("POST"));
         dto.add(linkTo(Objects.requireNonNull(methodOn(PersonController.class).update(dto))).withRel("update")
                 .withType("PUT"));

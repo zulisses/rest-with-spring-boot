@@ -1,4 +1,4 @@
-package com.github.zulisses.res_with_spring_boot.data;
+package com.github.zulisses.res_with_spring_boot.data.dto.v1;
 
 import java.io.Serializable;
 import java.util.Objects;
