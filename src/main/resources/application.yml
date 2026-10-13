@@ -2,6 +2,9 @@ cors:
   originPatterns: http://localhost:8080,http://localhost:3000,https://www.erudio.com.br
 file:
   upload-dir: /Users/user/Documents/uploadDir
+email:
+  subject: "Default Subject"
+  message: "Default Message"
 spring:
   application:
     name: res-with-spring-boot
@@ -15,6 +18,15 @@ spring:
       ddl-auto: none
     show-sql: false
     open-in-view: false
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
   servlet:
     multipart:
       enabled: true
