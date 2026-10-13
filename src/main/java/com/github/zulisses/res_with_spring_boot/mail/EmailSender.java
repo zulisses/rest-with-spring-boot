@@ -43,7 +43,7 @@ public class EmailSender implements Serializable{
         return this;
     }
 
-    public EmailSender withMessage(String body) {
+    public EmailSender withMessage(String message) {
         this.message = message;
         return this;
     }
