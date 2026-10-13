@@ -17,7 +17,7 @@ public class PersonDTO extends RepresentationModel<PersonDTO> implements Seriali
     private String lastName;
     private String address;
     private String gender;
-    private boolean enabled;
+    private Boolean enabled;
 
     public PersonDTO() {
     }
@@ -62,11 +62,11 @@ public class PersonDTO extends RepresentationModel<PersonDTO> implements Seriali
         this.gender = gender;
     }
 
-    public boolean isEnabled() {
+    public Boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
     }
 

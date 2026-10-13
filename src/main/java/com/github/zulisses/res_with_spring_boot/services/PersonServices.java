@@ -1,5 +1,9 @@
 package com.github.zulisses.res_with_spring_boot.services;
 
+import static com.github.zulisses.res_with_spring_boot.mapper.ObjectMapper.parseObject;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import java.io.InputStream;
 import java.util.List;
 import java.util.Objects;
@@ -8,6 +12,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PagedResourcesAssembler;
@@ -25,12 +30,11 @@ import com.github.zulisses.res_with_spring_boot.exception.BadRequestException;
 import com.github.zulisses.res_with_spring_boot.exception.FileStorageException;
 import com.github.zulisses.res_with_spring_boot.exception.RequiredObjectIsNullException;
 import com.github.zulisses.res_with_spring_boot.exception.ResourceNotFoundException;
+import com.github.zulisses.res_with_spring_boot.file.exporter.MediaTypes;
+import com.github.zulisses.res_with_spring_boot.file.exporter.contract.FileExporter;
+import com.github.zulisses.res_with_spring_boot.file.exporter.factory.FileExporterFactory;
 import com.github.zulisses.res_with_spring_boot.file.importer.contract.FileImporter;
 import com.github.zulisses.res_with_spring_boot.file.importer.factory.FileImporterFactory;
-
-import static com.github.zulisses.res_with_spring_boot.mapper.ObjectMapper.parseObject;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import com.github.zulisses.res_with_spring_boot.model.Person;
 import com.github.zulisses.res_with_spring_boot.repository.PersonRepository;
 
@@ -46,6 +50,9 @@ public class PersonServices {
 
     @Autowired 
     FileImporterFactory importer;
+
+    @Autowired 
+    FileExporterFactory exporter;
 
     @Autowired
     PagedResourcesAssembler<PersonDTO> assembler;
@@ -73,6 +80,19 @@ public class PersonServices {
         Page<Person> people = repository.findPeopleByFirstName(firstName, pageable);
 
         return buildPageModel(pageable, people);
+    }
+
+    public Resource exportPage(@NonNull Pageable pageable, String acceptHeader) {
+        logger.info("Exporting a people page!");
+
+        List<PersonDTO> people = repository.findAll(pageable).map(person -> parseObject(person, PersonDTO.class)).getContent();
+
+        try {
+        FileExporter exporter = this.exporter.getExporter(acceptHeader);
+            return exporter.exportFile(people);
+        } catch (Exception e) {
+            throw new RuntimeException("Error during file export", e);
+        }
     }
 
     public PersonDTO create(PersonDTO person) {
@@ -186,5 +206,7 @@ public class PersonServices {
                 .withRel("disable").withType("PATCH"));
         dto.add(linkTo(Objects.requireNonNull(methodOn(PersonController.class).delete(dto.getId()))).withRel("delete")
                 .withType("DELETE"));
+        dto.add(linkTo(Objects.requireNonNull(methodOn(PersonController.class).exportPage(0, 12, "asc", null))).withRel("exportPage")
+                .withType("GET").withTitle("Export People"));
     }
 }

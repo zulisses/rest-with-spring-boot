@@ -77,7 +77,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest{
         assertEquals("Carvalho", createdPerson.getLastName());
         assertEquals("BH", createdPerson.getAddress());
         assertEquals("Male", createdPerson.getGender());
-        assertEquals(true, createdPerson.isEnabled());
+        assertEquals(true, createdPerson.getEnabled());
     }
 
     @Test
@@ -104,7 +104,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest{
         assertEquals("Andrade Carvalho", updatedPerson.getLastName());
         assertEquals("BH", updatedPerson.getAddress());
         assertEquals("Male", updatedPerson.getGender());
-        assertEquals(true, updatedPerson.isEnabled());
+        assertEquals(true, updatedPerson.getEnabled());
     }
 
     @Test
@@ -129,7 +129,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest{
         assertEquals("Andrade Carvalho", foundPerson.getLastName());
         assertEquals("BH", foundPerson.getAddress());
         assertEquals("Male", foundPerson.getGender());
-        assertEquals(true, foundPerson.isEnabled());
+        assertEquals(true, foundPerson.getEnabled());
     }
 
     @Test
@@ -154,7 +154,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest{
         assertEquals("Andrade Carvalho", foundPerson.getLastName());
         assertEquals("BH", foundPerson.getAddress());
         assertEquals("Male", foundPerson.getGender());
-        assertEquals(false, foundPerson.isEnabled());
+        assertEquals(false, foundPerson.getEnabled());
     }
 
     @Test
@@ -194,7 +194,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest{
         assertEquals("Masham", people.get(0).getLastName());
         assertEquals("Apt 1227", people.get(0).getAddress());
         assertEquals("Male", people.get(0).getGender());
-        assertEquals(true, people.get(0).isEnabled());
+        assertEquals(true, people.get(0).getEnabled());
     }
 
     @Test
@@ -222,7 +222,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest{
         assertEquals("Blow", people.get(0).getLastName());
         assertEquals("PO Box 36999", people.get(0).getAddress());
         assertEquals("Male", people.get(0).getGender());
-        assertEquals(false, people.get(0).isEnabled());
+        assertEquals(false, people.get(0).getEnabled());
     }
 
     private void mockPerson() {
