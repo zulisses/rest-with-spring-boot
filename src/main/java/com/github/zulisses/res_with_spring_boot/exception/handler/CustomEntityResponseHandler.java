@@ -14,6 +14,7 @@ import com.github.zulisses.res_with_spring_boot.exception.BadRequestException;
 import com.github.zulisses.res_with_spring_boot.exception.ExceptionResponse;
 import com.github.zulisses.res_with_spring_boot.exception.FileNotFoundException;
 import com.github.zulisses.res_with_spring_boot.exception.FileStorageException;
+import com.github.zulisses.res_with_spring_boot.exception.InvalidJwtAuthenticationException;
 import com.github.zulisses.res_with_spring_boot.exception.RequiredObjectIsNullException;
 import com.github.zulisses.res_with_spring_boot.exception.ResourceNotFoundException;
 
@@ -56,5 +57,11 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
     public final ResponseEntity<ExceptionResponse> handleFileStorageException(Exception ex, WebRequest request) {
         ExceptionResponse response = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(InvalidJwtAuthenticationException.class)
+    public final ResponseEntity<ExceptionResponse> handleInvalidJwtAuthenticationException(Exception ex, WebRequest request) {
+        ExceptionResponse response = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }
 }
