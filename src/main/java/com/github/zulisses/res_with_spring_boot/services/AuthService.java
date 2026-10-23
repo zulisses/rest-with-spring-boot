@@ -25,7 +25,7 @@ public class AuthService {
     private UserRepository repository;
 
 
-    public ResponseEntity<TokenDTO> signIn(AccountCredentialsDTO credentials) {
+    public TokenDTO signIn(AccountCredentialsDTO credentials) {
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword()));
 
@@ -37,6 +37,6 @@ public class AuthService {
             user.getRoles()
         );
 
-        return ResponseEntity.ok(tokenResponse);
+        return tokenResponse;
     }
 }
