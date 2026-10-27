@@ -18,6 +18,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.zulisses.res_with_spring_boot.config.TestConfigs;
+import com.github.zulisses.res_with_spring_boot.data.dto.v1.security.AccountCredentialsDTO;
 import com.github.zulisses.res_with_spring_boot.integrationtests.testcontainers.AbstractIntegrationTest;
 import com.github.zulisses.res_with_spring_boot.integrationtests.dto.PersonDTO;
 import com.github.zulisses.res_with_spring_boot.integrationtests.dto.wrappers.WrapperPersonDTO;
@@ -35,6 +36,7 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest{
     
     private static RequestSpecification specification;
     private static ObjectMapper objectMapper;
+    private static String accessToken;
 
     private static PersonDTO person;
 
@@ -48,11 +50,33 @@ public class PersonControllerJsonTest extends AbstractIntegrationTest{
 
     
     @Test
+    @Order(0)
+    public void authorization() {
+        AccountCredentialsDTO user = new AccountCredentialsDTO();
+        user.setUsername("leandro");
+        user.setPassword("admin123");
+
+        accessToken = given()
+            .basePath("/auth/signin")
+            .port(TestConfigs.SERVER_PORT)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .body(user)
+            .when()
+            .post()
+            .then()
+            .statusCode(200)
+            .extract()
+            .path("accessToken");
+    }
+
+    @Test
     @Order(1)
     public void createTest() throws JsonProcessingException {
         mockPerson();
         
-        specification = new RequestSpecBuilder().addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_ERUDIO)
+        specification = new RequestSpecBuilder()
+        .addHeader(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_ERUDIO)
+        .addHeader(TestConfigs.HEADER_PARAM_AUTHORIZATION, "Bearer " + accessToken)
         .setBasePath("/api/person/v1").setPort(TestConfigs.SERVER_PORT)
         .addFilter(new RequestLoggingFilter(LogDetail.ALL))
         .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
