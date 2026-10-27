@@ -42,6 +42,8 @@ logging:
     # root: WARN
     '[com.github.zulisses.res_with_spring_boot]': DEBUG
 springdoc:
-  paths-to-match: /api/**/v1/**
+  paths-to-match: 
+    - /api/**/v1/**
+    - /auth/**
   swagger-ui:
     use-root-path: true
