@@ -1,6 +1,9 @@
 networks:
   minha-rede:
     driver: bridge
+  
+volumes: 
+  portainer_data:
 
 services:
   db:
@@ -21,7 +24,7 @@ services:
   rest-with-spring-boot:
     image: ulissescarvalho/rest-with-spring-boot
     restart: always
-    build: ./
+    # build: ./ 
     working_dir: /
     environment:
       TZ: America/Sao_Paulo
@@ -33,5 +36,16 @@ services:
     command: mvn spring-boot:run
     ports:
       - 80:80
+    networks:
+      - minha-rede
+    
+  portainer:
+    image: portainer/portainer-ce:2.21.5
+    restart: always
+    ports:
+      - 9000:9000
+    volumes:
+      - ../portainer_data:/data
+      - ${HOME}/.docker/run/docker.sock:/var/run/docker.sock
     networks:
       - minha-rede
