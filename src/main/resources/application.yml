@@ -17,9 +17,9 @@ spring:
     name: res-with-spring-boot
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/rest_with_spring_boot
+    url: ${JDBC_URL}
     username: postgres
-    password: tapetE24%
+    password: guqkud-hybsur-busxI4
   jpa:
     hibernate:
       ddl-auto: none
