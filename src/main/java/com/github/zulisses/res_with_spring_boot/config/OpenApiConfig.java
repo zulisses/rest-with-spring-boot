@@ -14,7 +14,7 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
             .info(new Info()
-                .title("REST API's RESTful from 0 with Java, Spring boot, Kubernetes and Docker")
+                .title("REST API's RESTful from 0 with Java, Spring boot, Kubernetes and Docker - v2")
                 .version("v1")
                 .description("API documentation for the project")
                 .termsOfService("https://github.com/zulisses/res-with-spring-boot")
