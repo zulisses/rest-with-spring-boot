@@ -6,33 +6,33 @@ volumes:
   portainer_data:
 
 services:
-  db:
-    image: postgres:15.1
-    restart: always
-    environment:
-      TZ: America/Sao_Paulo
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: tapetE24%
-      POSTGRES_DB: rest_with_spring_boot
-    ports:
-      - 5432:5432
-    networks:
-      - minha-rede
-    volumes:
-      - ../postgres_data:/var/lib/postgresql/data
+  # db:
+  #   image: postgres:15.1
+  #   restart: always
+  #   environment:
+  #     TZ: America/Sao_Paulo
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: tapetE24%
+  #     POSTGRES_DB: rest_with_spring_boot
+  #   ports:
+  #     - 5432:5432
+  #   networks:
+  #     - minha-rede
+  #   volumes:
+  #     - ../postgres_data:/var/lib/postgresql/data
 
   rest-with-spring-boot:
     image: ulissescarvalho/rest-with-spring-boot
     restart: always
-    # build: ./ 
+    build: ./ 
     working_dir: /
     environment:
       TZ: America/Sao_Paulo
-      SPRING.DATASOURCE.URL: jdbc:postgresql://db:5432/rest_with_spring_boot
+      SPRING.DATASOURCE.URL: ${JDBC_URL}
       SPRING.DATASOURCE.USERNAME: postgres
       SPRING.DATASOURCE.PASSWORD: guqkud-hybsur-busxI4
-    depends_on:
-      - db
+    # depends_on:
+    #   - db
     command: mvn spring-boot:run
     ports:
       - 80:80
